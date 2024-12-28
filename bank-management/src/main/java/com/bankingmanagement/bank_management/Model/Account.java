@@ -37,7 +37,20 @@ public class Account {
     @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Transaction> transactions;
 
-    // Getters and Setters
+    public Account() {
+    }
+
+    public Account(Long id, @NotNull @Size(min = 2, max = 100) String accountHolderName,
+            @NotNull @Size(min = 10, max = 10) String accountNumber,
+            @NotNull @Min(value = 0, message = "Balance must be non-negative") Double balance,
+            List<Transaction> transactions) {
+        this.id = id;
+        this.accountHolderName = accountHolderName;
+        this.accountNumber = accountNumber;
+        this.balance = balance;
+        this.transactions = transactions;
+    }
+
     public Long getId() {
         return id;
     }
@@ -77,4 +90,6 @@ public class Account {
     public void setTransactions(List<Transaction> transactions) {
         this.transactions = transactions;
     }
+
+    
 }

@@ -1,7 +1,6 @@
 package com.bankingmanagement.bank_management.Model;
 
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -13,8 +12,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-
-import java.time.LocalDateTime;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 
 
 @Entity
@@ -41,7 +40,19 @@ public class Transaction {
     @Enumerated(EnumType.STRING)
     private TransactionType transactionType;
 
-    // Getters and Setters
+    public Transaction() {
+    }
+
+    public Transaction(Long id, @NotNull @Min(value = 0, message = "Amount must be non-negative") Double amount,
+            @NotNull LocalDateTime transactionDate, @NotNull Account account,
+            @NotNull TransactionType transactionType) {
+        this.id = id;
+        this.amount = amount;
+        this.transactionDate = transactionDate;
+        this.account = account;
+        this.transactionType = transactionType;
+    }
+
     public Long getId() {
         return id;
     }
@@ -81,6 +92,8 @@ public class Transaction {
     public void setTransactionType(TransactionType transactionType) {
         this.transactionType = transactionType;
     }
+
+    
 }
 
 

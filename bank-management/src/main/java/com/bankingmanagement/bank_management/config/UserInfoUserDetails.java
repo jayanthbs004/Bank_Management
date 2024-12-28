@@ -1,6 +1,6 @@
-package com.ust.Security.config;
+package com.bankingmanagement.bank_management.config;
 
-import com.ust.Security.model.Userinfo;
+import com.bankingmanagement.bank_management.Model.Account;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -11,14 +11,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class UserInfoUserDetails implements UserDetails {
-    private String name;
-    private String password;
-    private List<GrantedAuthority> authorities;
+    private final String name;
+    private final String password;
+    private final List<GrantedAuthority> authorities;
 
-    public UserInfoUserDetails(Userinfo userInfo) {
-        name=userInfo.getName();
-        password=userInfo.getPassword();
-        authorities= Arrays.stream(userInfo.getRoles().split(","))
+    public UserInfoUserDetails(Account account) {
+        name = account.getAccountHolderName();
+        password = account.getPassword();
+        authorities = Arrays.stream(account.getRoles().split(","))
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
     }
@@ -58,4 +58,3 @@ public class UserInfoUserDetails implements UserDetails {
         return true;
     }
 }
-
