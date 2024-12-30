@@ -14,6 +14,7 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+
 @Entity
 @Table(name = "accounts")
 public class Account {
@@ -34,6 +35,12 @@ public class Account {
     @Min(value = 0, message = "Balance must be non-negative")
     private Double balance;
 
+    @NotNull
+    private String password;
+
+    @NotNull
+    private String roles;
+
     @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Transaction> transactions;
 
@@ -43,12 +50,13 @@ public class Account {
     public Account(Long id, @NotNull @Size(min = 2, max = 100) String accountHolderName,
             @NotNull @Size(min = 10, max = 10) String accountNumber,
             @NotNull @Min(value = 0, message = "Balance must be non-negative") Double balance,
-            List<Transaction> transactions) {
+            @NotNull String password, @NotNull String role) {
         this.id = id;
         this.accountHolderName = accountHolderName;
         this.accountNumber = accountNumber;
         this.balance = balance;
-        this.transactions = transactions;
+        this.password = password;
+        this.roles = roles;
     }
 
     public Long getId() {
@@ -83,6 +91,22 @@ public class Account {
         this.balance = balance;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getRoles() {
+        return roles;
+    }
+
+    public void setRoles(String roles) {
+        this.roles = roles;
+    }
+
     public List<Transaction> getTransactions() {
         return transactions;
     }
@@ -91,5 +115,4 @@ public class Account {
         this.transactions = transactions;
     }
 
-    
 }
